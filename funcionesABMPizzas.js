@@ -28,15 +28,17 @@ function EditarPizza(idParametro)
 	});
 	funcionAjax.done(function(retorno){
 		var pizza =JSON.parse(retorno);	
+
 		$("#idPizza").val(pizza.idPizza);
 		$("#nombre").val(pizza.nombre);
-		$("#ingredientes").val(pizza.ingredientes);
 		$("#precio").val(pizza.precio);
+		$("#ingredientes").val(pizza.ingredientes);
+		MostrarAltaPizzas();
 	});
 	funcionAjax.fail(function(retorno){	
 		alert(retorno);	
 	});	
-	MostrarAlta();
+	
 }
 
 function GuardarPizza()

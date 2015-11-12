@@ -24,12 +24,12 @@ function validarLogin()
 
 			if (retorno== "Administrador")
 			 {
-			 	MostrarFormLogADM();
+			 	MostrarLogin();
 
 			 } 
 			 if (retorno == "User")
 			 {
-			 	MostrarFormLog();
+			 	MostrarLogin();
 			 }	  
 		
 	});

@@ -14,16 +14,29 @@ switch ($wtd)
 	 	{
 	 	include("menuAdmin.php");
    		 } else
-   		 {	include ("menu.php");}
+   		 {	include ("menuUser.php");}
    		 
 	} else
 	{
 		include ("menuTerceros.php");  
 	}
-
 		break;
+
 		case 'Mostrarlogin':
+		if (isset($_SESSION['tipo'])) 
+		{
+
+			if ($_SESSION['tipo'] == "Administrador")
+			 {
+		 	include("formLogueadoAdmin.php");
+		
+			}else {
+			if ($_SESSION['tipo'] == "User") 
+			{include("FormLogueado.php");} 
+				}
+			} else{
 			include ("formLogin.php");
+			}
 			break;
 	
 	case 'Registrar':
@@ -32,8 +45,7 @@ switch ($wtd)
 	case 'MostrarErrorlog':
 		include("ErrorLogin.html");
 		break;
-	case 'MostrarFormlogueado':
-		include("FormLogueado.php");
+		
 		break;
 	case 'email':
 	include("formMail.html");
@@ -45,9 +57,8 @@ switch ($wtd)
 		$cantidad=$pizza->Borrarpizza();
 	break;
 
-	case 'MostrarLogADM':
-	include("formLogueadoAdmin.php");
-	break;
+	
+	
 			case 'Guardarpizza':
 			$pizza = new pizza();
 			$pizza->idPizza=$_POST['id'];
@@ -61,7 +72,6 @@ switch ($wtd)
 	case 'TraerPizza':
 			$pizza = pizza::TraerUnaPizza($_POST['id']);		
 			echo json_encode($pizza);
-			include ("formPizza.php");
 
 		break;
 	case 'MostrarAltaPizza':

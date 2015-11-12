@@ -67,7 +67,7 @@ public function ModificarPizza()
 public static function TraerUnaPizza($id) 
   {
       $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-      $consulta =$objetoAccesoDato->RetornarConsulta("select idPizza, Descripcion as nombre, Precio as precio,ingredientes from pizzas where id = $id");
+      $consulta =$objetoAccesoDato->RetornarConsulta("select idPizza, Descripcion as nombre, Precio as precio,ingredientes from pizzas where idPizza = $id");
       $consulta->bindValue(':id',$id,PDO::PARAM_INT);
       $consulta->execute();
       $pizzaBuscada= $consulta->fetchObject('pizza');

@@ -1,7 +1,7 @@
  <fieldset>
                              <legend>USUARIOS REGISTRADOS</legend>
                              
-<form onsubmit="validarLogin(); return false" method="post" class="" >
+<form onsubmit="" method="post" class="" >
     <div class="inline_field">
         <label for="EmailLogin" class="accessible">Tu email</label>
         <span class="custom_input_dark"> 
@@ -26,7 +26,7 @@
     </div><!-- .inline_field -->
 
     <div id="divLoginSubmit" type="submit" class="actions_submit">
-        <button type="submit" class="btn_submit actions_submit_excep"><span>Loguear</span></button>
+        <button type="submit" onclick="validarLogin(); return false"class="btn_submit actions_submit_excep"><span>Loguear</span></button>
     </div><!-- .actions_submit -->
 </form>
 
