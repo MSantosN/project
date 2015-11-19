@@ -13,6 +13,7 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
+    
     <link href="media-queries.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" type="text/css" href="animacion.css" / >
     <link href="bootstrap.min.css" rel="stylesheet" />
@@ -40,7 +41,14 @@
 <script type="text/javascript" src="funcionesLogin.js"></script>
 <script type="text/javascript" src="funcionesAjax.js"></script>  
 <script type="text/javascript" src="funcionesABMPizzas.js"></script>   
-<script type="text/javascript" src="funcionesABMUsuarios.js"></script>  
+<script type="text/javascript" src="funcionesABMUser.js"></script>  
+
+<script type="text/javascript" src="funcionesMapa.js"></script> 
+<script type="text/javascript" src="http://maps.google.com/maps/api/js"></script>
+<script src="http://maps.google.com/maps/api/js?sensor=false&callback=iniciar">
+</script>
+<script type="text/javascript" src="moduloGeolocalizacion.js"></script>
+<script type="text/javascript" src="geolocalizacionCommon.js"></script>
 
 </head>
 <body class="no-js home" stlye="height: 100px" id="fullPage" onLoad="MostrarLogin(); return false">  
@@ -98,8 +106,8 @@
         <div class="wrapper">
             <div class="slides_wrapper" stlye="min-height: 450px;">
                     <ul class="slides">
-                        <div class="" id="principal">
-                                 <img src="index.jpg" >         
+                        <div class="" id="principal" style="width:1000px;margin-left:-150px;">
+                                 <img src="index.jpg" style="width:800px;">         
                                
                         </div>
                     </li>                                       
@@ -144,7 +152,7 @@
                                         <li>
                                             <h4 class="heading-s">Corporativo</h4>
                                         </li>
-                                                <li><a href="" title = "Acerca de InserteNombre"  target="_blank"                                            >Acerca de Garrosh pizza</a></li>
+                                                <li><a onclick="About();return false" style="cursor:pointer"title = "Acerca de Garrosh"  target="_blank"                                            >Acerca de Garrosh pizza</a></li>
                                                 <li><a href="MANDAR A "EMPLEO", (hacer en nexo una inclucion de un parrafo) " title = "Trabaja con nosotros"  target="_blank"                                            >Trabaja con nosotros</a></li>
                                             <li>
                                                 <br />

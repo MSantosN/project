@@ -5,7 +5,7 @@
 	$arrayDepizzas= pizza::TraerTodasLasPizzas();
  ?>
 
- <table class="table"  border="4" style="background-color: #FEC500;border-color: black; align-content: center;">
+ <table class="table"  border="4" style="background-color: #FEC500;border-color: black; align-content: center;width:600px;margin-left:150px; ">
 	<thead>
 		<tr>		 
 			<th><h4>Descripcion</h4></th>

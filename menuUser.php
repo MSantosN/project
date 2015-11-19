@@ -3,9 +3,11 @@
 	require_once("AccesoDatos.php");
 	require_once("pizza.php");
 	$arrayDepizzas= pizza::TraerTodasLasPizzas();
+	if(isset($_SESSION['logueado'] && validadora::validarSesionActual()))
+	{ 
  ?>
 
- <table class="table"  border="4" style="background-color: #FEC500;border-color: black; align-content: center;">
+ <table class="table"  border="4" style="background-color: #FEC500;border-color: black; align-content: center;width:600px;margin-left:150px; ">
 	<thead>
 		<tr>		 
 			<th><h4>Descripcion</h4></th>
@@ -27,6 +29,10 @@ foreach ($arrayDepizzas as $pizza)
 			<td><input type='text' style='width: 30px;' /></td>
 		</tr>   ";
 }
+}else 
+	{ 
+      echo"<h3>usted no esta logeado o su session ya expiro. </h3>"; 
+	} ?>
 		 ?>
 	</tbody>
 </table>

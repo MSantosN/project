@@ -14,6 +14,9 @@
 <br>
 <button style="width:200px;height:40px;" class="btn-primary" onclick="MostrarAltaUser();return false"> <h4> Añadir usuario </h4> </button>
 </br>
+<br>
+<button style="width:200px;height:40px;" class="btn-primary" onclick="MostrarGrillaUser();return false"> <h4> Grilla usuarios </h4> </button>
+</br>
 
 
  </div>

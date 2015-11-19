@@ -9,8 +9,12 @@ class usuario
   public $localidad;
   public $provincia;
   public $mail;
+  public $sexo;
   public $foto;
   public $tipo;  
+  public $telefonocel;
+  public $telefonofijo;
+
 
  
   
@@ -25,15 +29,18 @@ class usuario
   public function InsertarUsuario()
      {
                 $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-                $consulta =$objetoAccesoDato->RetornarConsulta("INSERT into usuario (nombre,apellido,legajo,direccion,fecha,email,foto,clave)values(:paramNombre,:paramApellido,:paramLegajo,:paramDireccion,:paramFecha,:paramMail,:paramFoto,:paramClave)");
-                $consulta->bindValue(':paramNombre',$this->nombre, PDO::PARAM_STR);
-                $consulta->bindValue(':paramApellido', $this->apellido, PDO::PARAM_STR);
-                $consulta->bindValue(':paramLegajo', $this->legajo, PDO::PARAM_STR);
+                $consulta =$objetoAccesoDato->RetornarConsulta("INSERT into usuarios (nombreUsuario,password,sexo,direccion,localidad,provincia,tipo,email,foto,telefonocel,telefonofijo)values(:paramNombre,:parampass,:paramsexo,:paramDireccion,:paramLocalidad,:paramProvincia,:paramtipo,:paramMail,:paramFoto,:paramtelefonocel,:paramtelefonofijo)");
+                $consulta->bindValue(':paramNombre',$this->nombreUsuario, PDO::PARAM_STR);
+                $consulta->bindValue(':parampass', $this->pass, PDO::PARAM_STR);
+                $consulta->bindValue(':paramsexo', $this->sexo, PDO::PARAM_STR);
                 $consulta->bindValue(':paramDireccion', $this->direccion, PDO::PARAM_STR);
-                $consulta->bindValue(':paramFecha', $this->fecha, PDO::PARAM_STR);
+                $consulta->bindValue(':paramLocalidad', $this->localidad, PDO::PARAM_STR);
+                $consulta->bindValue(':paramProvincia', $this->provincia, PDO::PARAM_STR);
+                $consulta->bindValue(':paramtipo', $this->tipo, PDO::PARAM_STR);
                 $consulta->bindValue(':paramMail', $this->mail, PDO::PARAM_STR);
                 $consulta->bindValue(':paramFoto', $this->foto, PDO::PARAM_STR);
-                $consulta->bindValue(':paramClave', $this->clave, PDO::PARAM_STR);
+                $consulta->bindValue(':paramtelefonocel', $this->telefonocel, PDO::PARAM_STR);
+                $consulta->bindValue(':paramtelefonofijo', $this->telefonofijo, PDO::PARAM_STR);
                 $consulta->execute();       
                 return $objetoAccesoDato->RetornarUltimoIdInsertado();
      }
@@ -55,7 +62,7 @@ class usuario
 
      }
 
-        public function BorrarUsuario()
+        public function BorrarUsuarioSP()
    {
       $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
       $consulta =$objetoAccesoDato->RetornarConsulta("CALL BorrarUsuario(:id)"); 
@@ -65,6 +72,29 @@ class usuario
    }
 
 
-   
+        public function Borrarusuario()
+   {
+      $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+      $consulta =$objetoAccesoDato->RetornarConsulta("delete from usuarios where idUsuario = :id"); 
+        $consulta->bindValue(':id',$this->id, PDO::PARAM_INT);    
+        $consulta->execute();
+        return $consulta->rowCount();
+   }
+public function TraerUnUsuario($idParametro)
+{
+
+   $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+    $consulta =$objetoAccesoDato->RetornarConsulta("select idUsuario as id, nombreUsuario, password as pass, direccion, localidad, provincia, email as mail, foto, tipo from usuarios where idUsuario = :idP");
+    $consulta->bindValue(':idP',$idParametro,PDO::PARAM_INT);
+    $retorno = $consulta->fetchObject('usuario');
+
 }
+public static function TraerTodosLosUsuarios()
+  {
+    $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+   $consulta =$objetoAccesoDato->RetornarConsulta("select idUsuario as id,nombreUsuario,password as pass,sexo,direccion,localidad,provincia,tipo,email as mail,foto,telefonocel,telefonofijo from usuarios");
+   $consulta->execute();           
+  return $consulta->fetchAll(PDO::FETCH_CLASS, "usuario");
+  }
+}  
 ?>

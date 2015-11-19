@@ -31,8 +31,8 @@ class pizza
                 $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
                 $consulta =$objetoAccesoDato->RetornarConsulta("insert into pizzas (Descripcion,Precio, INGREDIENTES)values(:paramNombre,:paramPrecio,:paramIngredientes)");
                 $consulta->bindValue(':paramNombre',$this->nombre, PDO::PARAM_STR);
-                $consulta->bindValue(':paramPrecio', $this->apellido, PDO::PARAM_INT);
-                $consulta->bindValue(':paramIngredientes', $this->clave, PDO::PARAM_STR);
+                $consulta->bindValue(':paramPrecio', $this->precio, PDO::PARAM_INT);
+                $consulta->bindValue(':paramIngredientes', $this->ingredientes, PDO::PARAM_STR);
                 $consulta->execute();       
                 return $objetoAccesoDato->RetornarUltimoIdInsertado();
      }
@@ -52,14 +52,14 @@ public function ModificarPizza()
       $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
       $consulta =$objetoAccesoDato->RetornarConsulta("
         update pizzas 
-        set Descripcion=':nombre',
-        Precio=':precio',
-        INGREDIENTES=':ingredientes'
-        WHERE idPizza=':id'");
+        set Descripcion= :nombre,
+        Precio= :precio,
+        INGREDIENTES=:ingredientes
+        WHERE idPizza=:id");
       $consulta->bindValue(':nombre',$this->nombre, PDO::PARAM_STR);
       $consulta->bindValue(':precio',$this->precio, PDO::PARAM_INT);
       $consulta->bindValue(':ingredientes', $this->ingredientes, PDO::PARAM_STR);
-      $consulta->bindValue(':id', $this->idPizza, PDO::PARAM_STR);
+      $consulta->bindValue(':id', $this->idPizza, PDO::PARAM_INT);
       return $consulta->execute();
 
    }
@@ -77,7 +77,7 @@ public static function TraerUnaPizza($id)
    public function GuardarPizza()
    {
 
-    if($this->id>0)
+    if($this->idPizza>0)
       {
         $this->ModificarPizza();
       }else {

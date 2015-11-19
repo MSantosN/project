@@ -2,6 +2,7 @@
 session_start();
 require_once("AccesoDatos.php");
 require_once("pizza.php");
+require_once("usuario.php");
 $wtd = $_POST['queHacer'];
 
 switch ($wtd)
@@ -56,9 +57,6 @@ switch ($wtd)
 		$pizza->idPizza=$_POST['id'];
 		$cantidad=$pizza->Borrarpizza();
 	break;
-
-	
-	
 			case 'Guardarpizza':
 			$pizza = new pizza();
 			$pizza->idPizza=$_POST['id'];
@@ -77,8 +75,97 @@ switch ($wtd)
 	case 'MostrarAltaPizza':
 		include("formPizza.php");
 		break;
+
 case 'MostrarAltauser':
-		include("formUsuario.php");
+		include("formAltaUsuario.php");
+		break;
+
+		case 'Alta2':
+		include("formAltaUser2.php");
+		break;
+ case 'GuardarUser':
+			
+		$usuario = new usuario();
+		$usuario->id=$_POST['id'];
+		$usuario->nombreUsuario=$_POST['nombre'];
+		$usuario->pass=$_POST['pass'];
+		$usuario->sexo=$_POST['sexo'];
+        $usuario->mail=$_POST['mail'];
+        $usuario->provincia=$_POST['provincia'];
+        $usuario->localidad=$_POST['localidad'];
+        $usuario->direccion=$_POST['direccion'];
+        if (isset($_POST['telefonofijo'])) 
+       		 {
+       	 	 $usuario->telefonofijo=$_POST['telefonofijo'];
+       		 }
+        if (isset($_POST['telefonocelular'])) 
+        	{
+        	 $usuario->telefonocelular=$_POST['telefonocelular'];
+       		 }    
+        
+        $usuario->tipo=$_POST['tipo'];
+        $foto = $_POST['foto'];
+        $queHagoConLaFoto = $_POST['queHacerConLaFoto']; 
+		
+		if ($queHagoConLaFoto == 'nueva')
+		  {        
+			$ruta=getcwd();  //ruta directorio actual
+	        $rutaDestino=$ruta."/Fotos/";
+	    	//$NOMEXT=explode(".", $_FILES['fichero0']['name']);
+	    	$NOMEXT=explode(".", $foto);
+	        $EXT=end($NOMEXT);
+	        $nomarch=$NOMEXT[0].".".$EXT;  // no olvidar el "." separador de nombre/ext
+	        $rutaActual = $ruta."/FotosTemp/".$nomarch;
+
+	        $nuevoNombreDeFoto = str_replace(' ', '', $usuario->nombreUsuario);
+	        $nuevoNombreDeFoto = $nuevoNombreDeFoto.date("Y").date("m").date("d").date("H").date("i").date("s").".".$EXT;
+	        $nuevoNombreDeFoto = str_replace(' ', '', $nuevoNombreDeFoto); 
+
+	        rename ($ruta."/FotosTemp/".$nomarch,$ruta."/FotosTemp/".$nuevoNombreDeFoto);
+	        $rutaActual = $ruta."/FotosTemp/".$nuevoNombreDeFoto;
+	        echo $nomarch;
+	        echo "	</br>";
+	        echo $rutaActual;
+	         echo "	</br>";
+	        echo $rutaDestino.$nuevoNombreDeFoto;
+	         echo "	</br>";
+	        //Muevo a carpeta Fotos
+			rename($rutaActual,$rutaDestino.$nuevoNombreDeFoto);
+			$usuario->foto=$nuevoNombreDeFoto;	
+		  }	
+		 
+		if 	($queHagoConLaFoto == 'existe')
+		  {
+		  	$usuario->foto = $foto;
+		  }					
+  	
+		  
+		if 	($queHagoConLaFoto == 'noesta')
+		  {
+		  	$usuario->foto = 'no_image_for_this_product.gif';
+		  }					
+
+		$idInsertado=$usuario->InsertarUsuario();
+		echo $idInsertado;
+		break;
+case 'VerEnMapa':        
+        include("formMapa.php");
+		break;
+		case 'MostrarGrillaUsuario':
+		include("grillaUsuario.php");
+	break;
+		case 'TraerUsuario':
+		$usuario = usuario::TraerUnUsuario($_POST['id']);		
+		echo json_encode($usuario);
+		break;
+
+		case 'Borraruser':
+		$usuario = new usuario();
+		$usuario->id = $_POST['id'];
+		$cantidad=$usuario->Borrarusuario();
+		break;
+		case 'MostrarAbout':
+		include("about.html");
 		break;
 
 default:

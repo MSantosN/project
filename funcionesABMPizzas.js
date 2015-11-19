@@ -18,6 +18,7 @@ function BorrarPizza(idParametro)
 
 function EditarPizza(idParametro)
 {
+	MostrarAltaPizzas();
 	var funcionAjax=$.ajax({
 		url:"nexo.php",
 		type:"post",
@@ -27,13 +28,14 @@ function EditarPizza(idParametro)
 		}
 	});
 	funcionAjax.done(function(retorno){
+		
 		var pizza =JSON.parse(retorno);	
-
+		
 		$("#idPizza").val(pizza.idPizza);
-		$("#nombre").val(pizza.nombre);
+		$("#nombrePizza").val(pizza.nombre);
 		$("#precio").val(pizza.precio);
 		$("#ingredientes").val(pizza.ingredientes);
-		MostrarAltaPizzas();
+		
 	});
 	funcionAjax.fail(function(retorno){	
 		alert(retorno);	
@@ -42,8 +44,8 @@ function EditarPizza(idParametro)
 }
 
 function GuardarPizza()
-{
-		var id=$("#idPizza").val();
+{	
+		var idP=$("#idPizza").val();
 		var nombrePizza=$("#nombrePizza").val();
 		var precio=$("#precio").val();
 		var ingredientes=$("#ingredientes").val();
@@ -53,7 +55,7 @@ function GuardarPizza()
 		type:"post",
 		data:{
 			queHacer:"Guardarpizza",
-			id:id,
+			id:idP,
 			nombrePizza:nombrePizza,
 			precio:precio,
 			ingredientes:ingredientes	

@@ -2,6 +2,7 @@
 session_start();
 require_once("usuario.php");
 require_once("AccesoDatos.php");
+require_once("validadora.php");
 
 $usuario=$_POST['usuario'];
 $clave=$_POST['clave'];
@@ -22,7 +23,7 @@ if($miusuario != "no esta en la base")
 
 	$_SESSION['logueado'] = $miusuario->nombreUsuario;
 	$_SESSION['tipo'] = $miusuario->tipo;
-	
+	$_SESSION['tiempo']= date("Y-m-d H:i:s");
 	echo($_SESSION['tipo']);
 
 } else {
