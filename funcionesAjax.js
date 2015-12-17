@@ -60,19 +60,6 @@ funcionAjax.done(function(retorno){
 
 }
 
-function MostrarFormLogADM()
-{
-	var funcionAjax = $.ajax({
-url:"nexo.php",
-type:"post",
-data:{
-	queHacer:"MostrarLogADM"
-	}
-	});
-funcionAjax.done(function(retorno){
-	$("#formLogin").html(retorno);
-});
-}
 
 function Sugerir()
 {
@@ -135,6 +122,7 @@ funcionAjax.done(function(retorno){
 	$("#principal").html(retorno);
 });
 }
+
 function ContinuarRegistro()
 {
 	var foto = $("#imagen").attr('src');  
@@ -142,9 +130,9 @@ function ContinuarRegistro()
 	var pass = $("#password").val();
 	var email = $("#email").val();
 	var sexo = $('input:radio[name=sex]:checked').val();
-	var id = $("#idParaModificar").val();
+	var id = $("#id").val();
 	var files = $("#fichero").get(0).files;
-        
+
         if (files[0] != null)
         	{
         		foto = files[0].name;
@@ -163,10 +151,41 @@ function ContinuarRegistro()
             	 } 	
             }    	
 
-	var funcionAjax = $.ajax({
-		url:"nexo.php",
-		type:"post",
-		data:{
+            if ($("#direccionOc").val() != null ) 
+            	{
+            		var args = $("#argOc").val();
+            		var direcc = $("#direccionOc").val();
+            		var loca = $("#localidadOc").val() ;
+            		var pro = $("#provOc").val();
+            		var telfij = $("#telfijoOc").val();
+            		var telce = $("#telcel").val();
+            		var tip = $("#tipoOc").val();
+            	var funcionAjax = $.ajax({
+					url:"nexo.php",
+					type:"post",
+					data:{
+			queHacer:"Alta2",
+			queHacerConFoto:accionFoto,
+			fotot:foto,  
+			userNam:userName,
+			mail:email,
+			passw:pass,
+			sex:sexo,
+    		arg:args,
+            direc:direcc,
+            loc:loca,
+            prov:pro,
+            telfijo:telfij,
+            telcel:telce,
+            tipo:tip,
+
+           	idP:id	}
+            	});
+            }else{
+            	var funcionAjax = $.ajax({
+					url:"nexo.php",
+					type:"post",
+					 data:{
 			queHacer:"Alta2",
 			queHacerConFoto:accionFoto,
 			fotot:foto,  
@@ -175,15 +194,15 @@ function ContinuarRegistro()
 			passw:pass,
 			sex:sexo,
 			idP:id
+            	}
+            	});
+            }		
 
-		}
-	});
+
 funcionAjax.done(function(retorno){
-	
 	$("#principal").html(retorno);
 	});
 }
-
 function cargarFoto(){
     var files = $("#fichero").get(0).files; // $("#fichero") slector por id de jquery  
     //var envio = new FormData();
@@ -224,7 +243,6 @@ function cargarFoto(){
     });
 
 }
-
 function MostrarGrillaUser()
 {
 	var funcionAjax = $.ajax({
@@ -238,4 +256,78 @@ function MostrarGrillaUser()
 funcionAjax.done(function(retorno){
 	$("#principal").html(retorno);
 });
+}
+
+function Privacidad()
+{
+
+var funcionAjax = $.ajax({
+		url:"nexo.php",
+		type:"post",
+		data:{
+			queHacer:"Privacidad"
+		}
+
+	});
+funcionAjax.done(function(retorno){
+	$("#principal").html(retorno);
+});
+
+}
+
+function Comprar()
+{
+	var funcionAjax = $.ajax({
+		url:"nexo.php",
+		type:"post",
+		data:{
+			queHacer:"Venta"
+		}
+
+	});
+funcionAjax.done(function(retorno){
+	$("#principal").html(retorno);
+});
+
+}
+
+function ContactarAdmins()
+{
+var funcionAjax = $.ajax({
+		url:"nexo.php",
+		type:"post",
+		data:{
+			queHacer:"ContactoAdmin"
+		}
+
+	});
+funcionAjax.done(function(retorno){
+	$("#principal").html(retorno);
+});
+
+
+}
+
+function irAOfertas()
+{
+var funcionAjax=$.ajax({
+		url:"nexo.php",
+		type:"post",
+		data:{
+			queHacer:"Ofertas"
+		}
+	});
+
+	funcionAjax.done(function(retorno){
+		$("#principal").html(retorno);
+	});
+}
+
+function MostrarTiendas()
+{
+		VerTiendas("Beauchef 268", "Caballito", "Buenos Aires", 2, "Caballito");
+	VerTiendas("La Plata 42", "La Falda", "Cordoba", 3, "La Falda");
+	VerTiendas("Bynnon 2478", "Jose Marmol", "Buenos Aires",1, "Casa Central");
+
+
 }

@@ -3,6 +3,9 @@ session_start();
 require_once("AccesoDatos.php");
 require_once("pizza.php");
 require_once("usuario.php");
+require_once("venta.php");
+require_once("detalle.php");
+
 $wtd = $_POST['queHacer'];
 
 switch ($wtd)
@@ -26,18 +29,17 @@ switch ($wtd)
 		case 'Mostrarlogin':
 		if (isset($_SESSION['tipo'])) 
 		{
-
 			if ($_SESSION['tipo'] == "Administrador")
 			 {
 		 	include("formLogueadoAdmin.php");
 		
 			}else {
-			if ($_SESSION['tipo'] == "User") 
-			{include("FormLogueado.php");} 
+			include("FormLogueado.php"); 
 				}
-			} else{
+		} else{
 			include ("formLogin.php");
 			}
+
 			break;
 	
 	case 'Registrar':
@@ -72,6 +74,11 @@ switch ($wtd)
 			echo json_encode($pizza);
 
 		break;
+		case 'TraerNombrePizza':
+			$pizza = pizza::TraerUnaPizza($_POST['idpizza']);		
+			echo($pizza->nombre);
+
+		break;
 	case 'MostrarAltaPizza':
 		include("formPizza.php");
 		break;
@@ -84,9 +91,9 @@ case 'MostrarAltauser':
 		include("formAltaUser2.php");
 		break;
  case 'GuardarUser':
-			
+
 		$usuario = new usuario();
-		$usuario->id=$_POST['id'];
+		$usuario->id=$_POST['idP'];
 		$usuario->nombreUsuario=$_POST['nombre'];
 		$usuario->pass=$_POST['pass'];
 		$usuario->sexo=$_POST['sexo'];
@@ -143,19 +150,22 @@ case 'MostrarAltauser':
 		if 	($queHagoConLaFoto == 'noesta')
 		  {
 		  	$usuario->foto = 'no_image_for_this_product.gif';
-		  }					
-
-		$idInsertado=$usuario->InsertarUsuario();
+		  }				
+		$idInsertado=$usuario->GuardarUsuario();
 		echo $idInsertado;
 		break;
 case 'VerEnMapa':        
         include("formMapa.php");
 		break;
+		case 'VerTiendas':
+		include("formTiendas.php");
+		break;
 		case 'MostrarGrillaUsuario':
 		include("grillaUsuario.php");
 	break;
 		case 'TraerUsuario':
-		$usuario = usuario::TraerUnUsuario($_POST['id']);		
+		$usuario = usuario::TraerUnUsuario($_POST['id']);	
+
 		echo json_encode($usuario);
 		break;
 
@@ -164,10 +174,73 @@ case 'VerEnMapa':
 		$usuario->id = $_POST['id'];
 		$cantidad=$usuario->Borrarusuario();
 		break;
+
 		case 'MostrarAbout':
 		include("about.html");
 		break;
 
+		case 'Privacidad':
+		include("private.html");
+		break;
+
+		case 'ContactoAdmin':
+		include("grillaAdmins.php");
+		break;
+ case 'guardarMarcadores':
+        if(isset($_POST["marcadores"]))
+        {
+            $filename = "ArchivosTxt/marcador".   ".txt";
+
+            $_SESSION['file'] = $filename;
+            $puntos = $_POST["marcadores"];
+
+            $file = fopen($filename, "w");
+
+            foreach ($puntos as $valor)
+            {
+                $lat =  $valor["lat"];
+                $lng =  $valor["lng"];
+                $nombre =  $valor["nombre"];
+                fwrite($file, $lat.">".$lng.">".$nombre . PHP_EOL);
+            }
+        fclose($file);
+
+        echo "Marcadores guardados con exito";
+        }
+        else
+            echo "No ingreso marcador/es a guardar";
+        break;
+	case 'Ofertas':
+	include("formOfertas.html");
+	break;
+	case 'Venta':
+	include("formVenta.php");
+	break;
+	case 'TraerPrecio':        
+        $pizzaBuscada = pizza::TraerUnaPizza($_POST['idpizza']);
+        echo $pizzaBuscada->precio;	
+		break;
+		case 'Guardarventa':
+			$venta = new venta();
+			$venta->idventa=$_POST['id'];
+			$venta->fecha=$_POST['fecha'];
+			$venta->idVendor=$_POST['idVendor'];
+			$venta->direccion=$_POST['direccion'];
+			$venta->localidad=$_POST['localidad'];
+			$venta->provincia=$_POST['provincia'];
+			$cantidad=$venta->GuardarVenta();
+			echo $cantidad;
+
+		break;
+		case 'Guardardetalle':
+			$detalle = new detalle();
+			$detalle->idPizza=$_POST['idPizza'];
+			$detalle->idVenta=$_POST['idVenta'];
+			$detalle->cantidad=$_POST['cantidad'];
+			$cantidad=$detalle->GuardarDetalle();
+			echo $cantidad;
+
+		break;
 default:
 		# code...
 		break;

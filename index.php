@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 4.01 Transitional//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <?php
 
@@ -8,12 +8,15 @@
     <title>Ofertas exclusivas - Pizzeria Garrosh</title>
 
     <!-- META TAGS -->   
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="cache-control" content="no-cache" />
+
 
     <!-- CSS -->
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
     
+
     <link href="media-queries.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" type="text/css" href="animacion.css" / >
     <link href="bootstrap.min.css" rel="stylesheet" />
@@ -52,7 +55,7 @@
 
 </head>
 <body class="no-js home" stlye="height: 100px" id="fullPage" onLoad="MostrarLogin(); return false">  
-
+<div class="contenedor">
                       
 <div id="header" style="height:160px">   
     <div class="wrapper" > 
@@ -63,10 +66,10 @@
 
 <ul class="mod_product_categories_nav" id="MainMenuCategoryNav" style="height=20px;margin-top: 28px;">
             <li  id="Tab_-1">               
-                    <a onclick="irAOfertas();return false"  class=""  title="Ofertas"><span>Ofertas</span></a>            
+                    <a onclick="irAOfertas();return false"   style="cursor:pointer;" class=""  title="Ofertas"><span>Ofertas</span></a>            
             </li>
             <li  id="Tab_-2">               
-                    <a onclick="irAMenu(); return false"  class=""  title="Menú"><span>Menú</span></a>            
+                    <a onclick="irAMenu(); return false"  class="" style="cursor:pointer;" title="Menú"><span>Menú</span></a>            
             </li>
       
 </ul>        
@@ -83,14 +86,14 @@
                 <div id="headerLinks">
                     <ul class="mod_link_nav">
                             <li><a href="index.php" onclick="">Inicio</a></li>
-                            <li><a href="" onclick="ManejarCuenta();return false">Mi cuenta</a></li>
+                            <li><a href="/localizador" onclick="MostrarTiendas();return false"  style="cursor:pointer;">Tiendas</a></li>
+                            <li><a href="" onclick="ManejarCuenta();return false"  style="cursor:pointer;" >Mi cuenta</a></li>
                             <!-- -->
-                            <li><a onclick="deslogear();return false" >Salir</a></li>
+                            <li><a onclick="deslogear();return false"  style="cursor:pointer;">Salir</a></li>
                     </ul>
-                    <ul class="mod_link_nav secondary">
-                            <li><a href="/localizador" onclick="">Tiendas</a></li>
-                            <li><a href="/tracker" onclick="">Estado del pedido</a></li>
-                    </ul>
+                   
+                            
+                  
                 </div>                
                     
             </div>
@@ -111,8 +114,7 @@
                                
                         </div>
                     </li>                                       
-                                          
-                                                     
+                                                              
                 </ul>            
             </div>
             
@@ -141,9 +143,9 @@
         </ul>        
     </div> 
 </div>
+</body>
 
-
-
+<footer>
 <div id="footer">
     <div class="wrapper row" stlye="margin">
         <div class="col site_links">
@@ -161,22 +163,18 @@
                                         <li>
                                             <h4 class="heading-s">Aviso Legal</h4>
                                         </li>    
-                                                <li><a href="Privacidad" title = "Politicia de privacidad" >Pol&#237;tica de privacidad</a></li>
+                                                <li><a onclick="Privacidad();return false" style="cursor:pointer;" title = "Politicia de privacidad" >Pol&#237;tica de privacidad</a></li>
                                              </ul>   
             <ul class="col_sls last">
                                 <li>
                                     <h4 class="heading-s">Ayuda</h4>
                                 </li>
-                                        <li><a href="//ayuda.telepizza.es/faqs/" title = "Preguntas frecuentes" 
- target="_blank">Preguntas frecuentes</a></li>                            
+                                                                 
                                         <li><a href="/localizador" title = "Localizador tiendas" 
 >Localizador tiendas</a></li>                            
-                                        <li><a href="/info/contacto.html" title = "Contacto" 
+                                        <li><a style="cursor:pointer;" onclick="Sugerir();return false" title = "Contacto" 
 >Contacto</a></li>                            
-                                        <li><a href="/tracker" title = "Estado del pedido" 
->Estado del pedido</a></li>                            
-                                        <li><a href="/#registrarse" title = "Registro" 
->Registro</a></li>                            
+                                        
             </ul>
         </div>
         <div class="col site_links">
@@ -188,7 +186,7 @@
                         <a href="/productos/ofertas">Ofertas</a>
                     </li>
                     <li>
-                        <a onclick="irAMenu()" > Menú</a>
+                        <a onclick="irAMenu()"  style="cursor:pointer;" > Menú</a>
                     </li>
             </ul>
             <ul class="col_sls">                              
@@ -197,5 +195,6 @@
 
 
     
-</body>
+</footer>
+</div>
 </html>

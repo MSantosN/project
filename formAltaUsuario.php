@@ -17,23 +17,18 @@
 <?php     
 	require_once("usuario.php");
 
-	$titulo = "ALTA Usuario 1/2";
+	$titulo = "Carga de Usuario 1/2";
 	$idPara=0;
-	if(isset($_POST['idParaModificar'])) /*viene de la grilla*/
-	{
-		$idPara = $_POST['idParaModificar'];
-		$unaPersona = usuario::TraerUnUsuario($_POST['idParaModificar']);
-		$titulo = "MODIFICACIÓN Usuario 1/2";
-	} 
+
 ?>
 
 		<div class="CajaInicio animated bounceInRight" style="margin-left:150px;">
 			<h3 class="form-ingreso-heading"> <?php echo $titulo; ?> </h3>
 			<!--  -->
-			<form id="FormIngreso" method="post" onsubmit="ContinuarRegistro();return false" class="form-ingreso"action="formAlta.php" enctype="multipart/form-data" >
+			<form id="FormIngreso" method="post" onsubmit="ContinuarRegistro();return false" class="form-ingreso" enctype="multipart/form-data" >
 				
 				<input type="text" name="userName" class="form-control" id="userName" placeholder="Nombre de usuario" required="" value="<?php echo isset($unaPersona) ?  $unaPersona->nombreUsuario  : "" ; ?>" />
-				<?php echo isset($unaPersona) ? 	"<p style='color: black;'>*El Nombre de usuario no se puede cambiar.</p> ": "" ; ?> <?php echo isset($unaPersona) ?  "readonly": "" ; ?>
+				
 				<input type="email" name="email" class="form-control" id="email"  required placeholder="Email" value="<?php echo isset($unaPersona) ?  $unaPersona->mail : "" ; ?>" /> 
 				<input type="password" name="password" id="password" class="form-control" placeholder="Password" value="<?php echo isset($unaPersona) ?  $unaPersona->pass : "" ; ?>" required    /> 
 
@@ -42,7 +37,7 @@
   				  <input type="radio" name="sex" id="Femenino" value="Femenino"> Femenino
 
 				<input type="hidden" name="idOculto" id="id" value="<?php echo isset($unaPersona) ? $unaPersona->id : "" ; ?>" />
-				<input type="file" name="imagen" id="fichero" onchange="cargarFoto();return false" required ></input>
+				<input type="file" name="imagen" id="fichero" onchange="cargarFoto();return false"  ></input>
 
 				<img  src="<?php echo isset($unaPersona) ? $unaPersona->foto : "pordefecto.png" ; ?>" class="fotoform" id="imagen"/>
 
@@ -53,7 +48,15 @@
 
 				<input type="hidden" value="<?php echo $idPara; ?>" id="idParaModificar" name="agregar" />
 				<input type="hidden" value="" id="hdnAgregar" name="agregar" />
-			
+			<input type="hidden" name="argentino" id="argOc" />
+			<input type="hidden" name="direccion" id="direccionOc" />
+			<input type="hidden" name="localidad" id="localidadOc"  />
+			<input type="hidden" name="provincia" id="provOc" />
+			<input type="hidden" name="telfijo" id="telfijoOc"  />
+			<input type="hidden" name="telcel" id="telcelOc"  />
+			<input type="hidden" name="tipo" id="tipoOc" />
+
+
 				</form>
 
 				</div>
@@ -68,8 +71,8 @@ if(isset($_POST['agregar']) && $_POST['agregar'] === "Guardar")// si esto no se 
 
 	if($_POST['idOculto'] != "")//Solo para la foto
 	{
-		$unaPersona = usuario::TraerUnUsuario($_POST['idOculto']);
-		$foto=$unaPersona->foto;
+		$$usuario = usuario::TraerUnUsuario($_POST['id']);
+		$foto=$usuario->foto;
 		
 	}else
 	{

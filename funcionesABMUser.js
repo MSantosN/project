@@ -1,6 +1,6 @@
 function GuardarUsuario()
 {	
-        var id = $("#idOc").val()
+        var id = $("#idOc").val();
 		var nombre=$("#userOc").val();
 		var pass=$("#passOc").val();
         var sexo=$("#sexoOc").val();
@@ -15,6 +15,8 @@ function GuardarUsuario()
         		var direccion = $("#Dire").val();
         	} else
         	{
+        		var provincia = "";
+        		var localidad = "";
         		var direccion = "Este usuario no es ubicable";	
         	}	
         if ($("#telefonocelular").is(':checked'))
@@ -32,7 +34,7 @@ function GuardarUsuario()
 		type:"POST",
 		data:{
 				queHacer:"GuardarUser",
-				id:id,
+				idP:id,
 				nombre:nombre,
 				pass:pass,
 	            sexo:sexo,
@@ -48,8 +50,7 @@ function GuardarUsuario()
 	           
 			 }
 	});
-	funcionAjax.done(function(retorno){			
-		
+	funcionAjax.done(function(retorno){		
 		MostrarGrillaUser();						
 	});
 	funcionAjax.fail(function(retorno){	
@@ -78,9 +79,7 @@ function BorrarUsuario(idParametro)
 }
 
 function EditarUsuario(idParametro)
-{
-	alert("Modificar");
-	/*
+{	
 	 MostrarAltaUser();	
 	var funcionAjax=$.ajax({
 		url:"nexo.php",
@@ -90,21 +89,42 @@ function EditarUsuario(idParametro)
 			id:idParametro	
 		}
 	});
-	funcionAjax.done(function(retorno){		
-		var usuario = JSON.parse(retorno);		
+	funcionAjax.done(function(retorno){	
+		var usuario = JSON.parse(retorno);	
 		$("#id").val(usuario.id);
-		$("#nombreUsuario").val(usuario.nombreUsuario);
-        $("#pass").val(usuario.pass);
-        $("#mail").val(usuario.mail);
+		$("#userName").val(usuario.nombreUsuario);
+		$("#email").val(usuario.mail);
+        $("#password").val(usuario.pass);
         //$("#fichero").attr('name',usuario.foto); 
-        $("#mail").val(usuario.mail);
-        $("#mail").val(usuario.mail);
-        $("#mail").val(usuario.mail);
+        
+        if (usuario.direccion != "Este usuario no es ubicable") 
+        	{
+        		$("#argOc").val(true);
+        		$("#direccionOc").val(usuario.direccion);
+        		$("#localidadOc").val(usuario.localidad);
+        		$("#provOc").val(usuario.provincia);
+        	}
+        	else{
+        		$("#argOc").value = "";
+        		 $("#direccionOc").val(usuario.direccion);
+        		 $("#localidadOc").value = "";
+        		 $("#provOc").value = "";
+        	}
 
+        if (usuario.telefonofijo != null) 
+        {
+        	$("#telfijoOc").val(usuario.telefonofijo);
+        }
+        if (usuario.telefonocelular != null )
+        	{
+        		$("#telcelOc").val(usuario.telefonocelular);
+        	}
+        $("#tipoOc").val(usuario.tipo);	
+        
         $("#imagen").attr('src','Fotos/'+usuario.foto);        
 	});
 	funcionAjax.fail(function(retorno){
 		alert(retorno);
 	});
-	*/
+	
 }

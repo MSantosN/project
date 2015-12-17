@@ -27,11 +27,15 @@ function validarLogin()
 			 	MostrarLogin();
 
 			 } 
-			 if (retorno == "User")
+			 if (retorno == "Normal")
 			 {
 			 	MostrarLogin();
 			 }	  
 		
+		 if (retorno == "User")
+			 {
+			 	MostrarLogin();
+			 }	  
 	});
 
 	funcionAjax.fail(function(retorno){
@@ -51,4 +55,35 @@ function deslogear()
 			MostrarLogin();
 			window.location.href = "index.php";			
 	});	
+}
+
+function LoguearAdmin()
+{
+	var funcionAjax=$.ajax({
+		url:"validarUsuario.php",
+		type:"post",
+		data:{
+			master:"Administrador"			
+		}
+	});
+funcionAjax.done(function(retorno){
+				alert(retorno);
+			MostrarLogin(); 
+	});
+
+}
+function LoguearUser()
+{
+var funcionAjax=$.ajax({
+		url:"validarUsuario.php",
+		type:"post",
+		data:{
+			master:"User"
+		}
+	});
+funcionAjax.done(function(retorno){
+				
+			MostrarLogin(); 
+	});
+
 }

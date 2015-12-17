@@ -78,12 +78,14 @@ Geolocalizacion.Marcador = Geolocalizacion.Marcador || {};
 
     self.verMarcador = function verMarcador(){
 
-        var unCliente = $("#id").val();        
+        var idUsuario = $("#id").val(); 
+        var nombreUsuario = $("#nombreUsuario").val();
+        var idUsuario = idUsuario + " " +  nombreUsuario;      
         var dire = $("#punto").val();
                
         if(dire != "") {
 
-          Geolocalizacion.encontrarDireccion(map, dire, geocoder, puntos, infoWindow);
+          Geolocalizacion.encontrarDireccion(map, dire, idUsuario, geocoder, puntos, infoWindow);
         }
     }
 
@@ -108,7 +110,7 @@ Geolocalizacion.Marcador = Geolocalizacion.Marcador || {};
              {
               //string no encontrado
                //$("#btnDescarga").attr("disabled", false);
-                location.href='partes/descarga.php';
+                location.href='descarga.php';
              }
              else 
                 alert(dato);

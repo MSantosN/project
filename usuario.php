@@ -80,13 +80,26 @@ class usuario
         $consulta->execute();
         return $consulta->rowCount();
    }
-public function TraerUnUsuario($idParametro)
+public static function TraerUnUsuario($idParametro)
 {
 
    $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
-    $consulta =$objetoAccesoDato->RetornarConsulta("select idUsuario as id, nombreUsuario, password as pass, direccion, localidad, provincia, email as mail, foto, tipo from usuarios where idUsuario = :idP");
+    $consulta =$objetoAccesoDato->RetornarConsulta("select idUsuario as id,nombreUsuario,password as pass,sexo,direccion,localidad,provincia,tipo,email as mail,foto,telefonocel,telefonofijo from usuarios where idUsuario = :idP");
     $consulta->bindValue(':idP',$idParametro,PDO::PARAM_INT);
+    $consulta->execute();
     $retorno = $consulta->fetchObject('usuario');
+    return $retorno;
+
+}
+public static function TraerUnUsuarioPorNombre($nombreParametro)
+{
+
+   $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+    $consulta =$objetoAccesoDato->RetornarConsulta("select idUsuario as id,nombreUsuario,password as pass,sexo,direccion,localidad,provincia,tipo,email as mail,foto,telefonocel,telefonofijo from usuarios where nombreUsuario = :nombreP");
+    $consulta->bindValue(':nombreP',$nombreParametro,PDO::PARAM_STR);
+    $consulta->execute();
+    $retorno = $consulta->fetchObject('usuario');
+    return $retorno;
 
 }
 public static function TraerTodosLosUsuarios()
@@ -96,5 +109,41 @@ public static function TraerTodosLosUsuarios()
    $consulta->execute();           
   return $consulta->fetchAll(PDO::FETCH_CLASS, "usuario");
   }
-}  
+public function ModificarUsuario()
+   {
+     $objetoAccesoDato = AccesoDatos::dameUnObjetoAcceso(); 
+      $consulta =$objetoAccesoDato->RetornarConsulta("
+        UPDATE usuarios set nombreUsuario=:pnombre,password=:ppass,sexo=:psexo,Direccion=:pdirec,
+                   Localidad=:ploc,Provincia=:pprov,email=:pmail,foto=:pfoto,tipo=:ptip,
+                   telefonocel=:ptcelular,
+                   telefonofijo=:ptfijo
+        WHERE idUsuario = :pid");
+      $consulta->bindValue(':pid',$this->id,PDO::PARAM_INT);
+      $consulta->bindValue(':pnombre',$this->nombreUsuario,PDO::PARAM_STR);
+      $consulta->bindValue(':ppass',$this->pass,PDO::PARAM_STR);
+      $consulta->bindValue(':psexo',$this->sexo,PDO::PARAM_STR);
+      $consulta->bindValue(':pdirec',$this->direccion,PDO::PARAM_STR);  
+      $consulta->bindValue(':pprov',$this->provincia,PDO::PARAM_STR);
+      $consulta->bindValue(':ploc',$this->localidad,PDO::PARAM_STR);
+      $consulta->bindValue(':pmail',$this->mail,PDO::PARAM_STR);
+      $consulta->bindValue(':pfoto',$this->foto,PDO::PARAM_STR);
+      $consulta->bindValue(':ptip',$this->tipo,PDO::PARAM_STR);
+      $consulta->bindValue(':ptcelular',$this->telefonocel,PDO::PARAM_STR);
+      $consulta->bindValue(':ptfijo',$this->telefonofijo,PDO::PARAM_STR);
+      
+      return $consulta->execute();
+
+   }
+
+ public function GuardarUsuario()
+   {
+    if($this->id>0)
+      {
+        $this->ModificarUsuario();
+      }else {
+        $this->InsertarUsuario();
+      }
+
+   }
+}
 ?>
